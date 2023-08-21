@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Register Page</title>
+</head>
+
+<body>
+    <%- include('./partials/navbar') %>
+        <div class="container">
+            <form action="/user/Register" method="post">
+                <h1>Create New Account</h1>
+                <div>
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username">
+                </div>
+                <div>
+                    <label for="email">Email Id</label>
+                    <input type="email" id="email" name="email">
+                </div>
+                <div>
+                    <label for="pass">Password</label>
+                    <input type="password" id="password" name="password">
+                </div>
+                <% if(message) {%>
+                    <div class="msg">
+                        <%=message %>
+                    </div>
+                    <% } %>
+                        <div>
+                            <button type="submit">Create New Account</button>
+                        </div>
+
+            </form>
+            <div>Already have an account? <a href="/user/Login">Login</a></div>
+        </div>
+</body>
+
+</html>

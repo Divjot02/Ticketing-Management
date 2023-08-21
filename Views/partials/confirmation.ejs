@@ -1,0 +1,46 @@
+<style>
+    .confirmation-popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+    }
+
+    .confirmation-content {
+        text-align: center;
+    }
+
+    .confirmation-content h2 {
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    .confirmation-content p {
+        margin-bottom: 20px;
+    }
+
+    .confirmation-content button {
+        margin-right: 10px;
+        padding: 5px 15px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+</style>
+<!-- Confirmation Popup -->
+<div class="confirmation-popup" id="confirmationPopup">
+    <div class="confirmation-content">
+        <h2 id="headmsg">Confirm Ticket Closure</h2>
+        <p id="msg">Are you sure you want to close this ticket?</p>
+        <button id="confirmCloseBtn">Confirm</button>
+        <button id="cancelCloseBtn">Cancel</button>
+    </div>
+</div>

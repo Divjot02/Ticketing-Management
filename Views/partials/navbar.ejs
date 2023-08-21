@@ -1,0 +1,49 @@
+<!-- views/partials/navbar.ejs -->
+<style>
+    /* Reset some default styles */
+    body,
+    h1,
+    h2,
+    p {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Navbar styling */
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #333;
+        padding: 10px 20px;
+        color: white;
+    }
+
+    .logo h1 {
+        font-size: 24px;
+    }
+
+    .nav-links {
+        list-style: none;
+        display: flex;
+    }
+
+    .nav-links li {
+        margin-right: 20px;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: white;
+    }
+</style>
+<nav>
+    <div class="logo">
+        <h1>Ticket Management System</h1>
+    </div>
+    <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/user/Dashboard">Dashboard</a></li>
+        <li><a href="/user/Logout">Logout</a></li>
+    </ul>
+</nav>
