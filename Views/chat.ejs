@@ -60,10 +60,72 @@
             background: #efefef;
         }
     </style>
+    <!-- <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .chat-container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .message-section {
+            flex: 2;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        #message-form {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            padding: 10px;
+        }
+
+        #message-input {
+            width: calc(100% - 80px);
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style> -->
 </head>
 
 <body>
-    <ul id="messages"></ul>
+    <!-- <div class="chat-container">
+        <div class="message-section"> -->
+    <!-- </div>
+    </div>
+ <form id="message-form">
+        <select id="connected"> 
+                    </select>
+                    <input type="text" id="message-input" placeholder="Type your message here..." />
+                    <button type="submit">Send</button>
+                    </form> -->
+    <ul id="messages">
+        <% if (typeof messages !=='undefined' ) { %>
+            <% messages.forEach(message=>{ %>
+                <li> <span>
+                        <% if (session.username !==message.sender ) { %>
+                            <%=message.sender%>
+                                <% } else {%>
+                                    You
+                                    <%}%>
+                    </span>
+                    <!-- <p class="message-text"> -->
+                    <p>
+                        <%=message.message%>
+                    </p>
+                </li>
+                <% })%>
+                    <% } %>
+    </ul>
     <form id="form" action="">
         <input id="input" autocomplete="off" /><button>Send</button>
         <input type="file">
@@ -71,6 +133,11 @@
 </body>
 <script>
     var socket = io();
+    // const messageForm = document.getElementById("message-form");
+    // const msg = document.getElementById("message-input");
+    // const messageSection = document.querySelector(".message-section");
+    // const parentE = document.getElementById("connected");
+
     var form = document.getElementById('form');
     var input = document.getElementById('input');
     // Join the chat room for the selected ticket
@@ -80,11 +147,11 @@
 
     form.addEventListener('submit', function (e) {
         e.preventDefault();
-        if (input.value) {
+        if (input.value.trim() !== "") {
             socket.emit('chat message', {
                 ticketId,
                 sender: sessionUsername,
-                message: input.value,
+                message: input.value.trim(),
             });
             input.value = '';
         }
@@ -92,10 +159,17 @@
 
     socket.on('chat message', function (data) {
         // Display the received message in the UI
+        const { sender, message } = data;
         var messages = document.getElementById('messages');
         var li = document.createElement('li');
-        li.textContent = `${data.sender}: ${data.message}`;
+        if (sessionUsername === sender) {
+            li.textContent = `You: ${message}`;
+        } else {
+            li.innerHtml = `<span>${sender}:</span> <p>${message}<p>`;
+        }
+
         messages.appendChild(li);
+        messages.scrollTop = messages.scrollHeight;
     });
 </script>
 

@@ -1,8 +1,9 @@
+const MessageModel = require("../Models/message");
 async function handleChatPage(req, res) {
   const ticketId = req.query.ticketId;
-  console.log(ticketId);
   const session = req.session;
-  res.render("chat", { ticketId, session });
+  const messages = await MessageModel.find({ ticketId: ticketId });
+  res.render("chat", { ticketId, session, messages });
 }
 
 module.exports = {

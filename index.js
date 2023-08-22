@@ -94,7 +94,7 @@ io.on("connection", (socket) => {
     }
 
     // Emit the message back to clients in the same chat room
-    io.to(ticketId).emit("chat message", { ticketId, sender, message });
+    io.to(ticketId).emit("chat message", { sender, message });
   });
 
   socket.on("disconnect", () => {
