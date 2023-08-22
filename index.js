@@ -41,14 +41,14 @@ app.use(express.static(path.join(__dirname, "public")));
 //routes
 app.get("/", (req, res) => {
   if (req.session.isLoggedIn) {
-    res.render("userDashboard", { username: req.session.username });
+    res.render("userDashboard.ejs", { username: req.session.username });
     return;
   }
   if (req.session.resolverLogggedIn) {
-    res.render("resolverDashboard", { session: req.session });
+    res.render("resolverDashboard.ejs", { session: req.session });
     return;
   }
-  res.render("default");
+  res.render("default.ejs");
 });
 
 //TEMPORARY---------------------------

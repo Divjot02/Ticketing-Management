@@ -4,7 +4,7 @@ function handleUserDashboard(req, res) {
   if (req.session.isLoggedIn) {
     // const { username } = req.session;
     // res.render("userDashboard", { username });
-    res.render("userDashboard", { username: req.session.username });
+    res.render("userDashboard.ejs", { username: req.session.username });
   } else {
     res.redirect("/user/Login"); // Redirect to the login page if not logged in
   }
@@ -12,7 +12,7 @@ function handleUserDashboard(req, res) {
 
 function handleLoginForm(req, res) {
   if (req.session.isLoggedIn) {
-    res.redirect("user/userDashboard");
+    res.redirect("user/userDashboard.ejs");
     return;
   }
   res.render("login", { message: null });
@@ -68,7 +68,7 @@ async function handleUserRegister(req, res) {
       await userObj.save();
       //redirect to login
       //   res.redirect("/user/Login");
-      res.render("login", {
+      res.render("login.ejs", {
         message: "Registered Successfully! Login to proceed to dashboard",
       });
     } catch (err) {
@@ -77,7 +77,7 @@ async function handleUserRegister(req, res) {
     }
   } else {
     //("All fields are required");
-    res.render("register", { message: "All fields are required" });
+    res.render("register.ejs", { message: "All fields are required" });
   }
 }
 
