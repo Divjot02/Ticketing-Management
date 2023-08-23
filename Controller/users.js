@@ -50,7 +50,7 @@ async function handleUserRegister(req, res) {
     req.body.password.trim() !== ""
   ) {
     try {
-      const email = req.body.email;
+      const email = req.body.email.trim();
       const user = await userModel.findOne({ email: email });
       if (user) {
         res.render("register", {

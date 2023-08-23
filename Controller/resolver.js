@@ -18,32 +18,37 @@ function handleResolverForm(req, res) {
   res.render("resolverLogin", { message: null });
 }
 async function handleResolverLogin(req, res) {
-  try {
-    const email = req.body.email;
-    const password = req.body.password;
-    const department = req.body.department;
-    // console.log(email + department);
-    const resolver = await resolverModel.findOne({
-      email: email,
-      password: password,
-      department: department,
-    });
-    if (resolver) {
-      req.session.resolverLoggedIn = true;
-      req.session.username = resolver.username;
-      req.session.department = resolver.department;
-      //redirect to dashboard
-      res.redirect("/resolver/Dashboard");
-      return;
+  if (
+    req.body.email.trim() !== "" &&
+    req.body.password.trim() !== "" &&
+    req.body.department.trim() !== ""
+  )
+    try {
+      const email = req.body.email.trim();
+      const password = req.body.password.trim();
+      const department = req.body.department.trim();
+      // console.log(email + department);
+      const resolver = await resolverModel.findOne({
+        email: email,
+        password: password,
+        department: department,
+      });
+      if (resolver) {
+        req.session.resolverLoggedIn = true;
+        req.session.username = resolver.username;
+        req.session.department = resolver.department;
+        //redirect to dashboard
+        res.redirect("/resolver/Dashboard");
+        return;
+      }
+      //if no match found then redirect to login page with an error message
+      res.render("resolverlogin", {
+        message: "Invalid Email/Password/Department",
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(500).send("error");
     }
-    //if no match found then redirect to login page with an error message
-    res.render("resolverlogin", {
-      message: "Invalid Email/Password/Department",
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("error");
-  }
 }
 async function handleResolverLogout(req, res) {
   // if (!req.session.resolverIsLoggedIn) {
