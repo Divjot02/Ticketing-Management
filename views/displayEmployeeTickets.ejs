@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 
 <head>
@@ -79,7 +79,7 @@
             cursor: pointer;
         }
 
-        #ResolvedBtn {
+        #CloseBtn {
             background-color: #c53535;
             margin-bottom: 10px;
         }
@@ -95,8 +95,6 @@
 </head>
 
 <body>
-    <%- include('./partials/resolverSidebar')%>
-        <%- include('./partials/confirmation.ejs') %>
             <div class="content">
                 <div class="welcome">Your Tickets</div>
                 <div class="ticket-row">
@@ -108,9 +106,8 @@
                                         <%= ticket._id %>
                                     </div>
                                     <% if(ticket.status==="open" ) { %>
-                                        <button id="ResolvedBtn" class="ticket-button"
-                                            resolve-id="<%= ticket._id %>">Mark
-                                            as Resolved</button>
+                                        <button id="CloseBtn" class="ticket-button"
+                                            close-id="<%= ticket._id %>">Close</button>
                                         <% } %>
                                 </div>
                                 <div class="ticket-details">
@@ -132,7 +129,8 @@
                                         <div class="ticket-badge">
                                             <%= ticket.priority %>
                                         </div>
-                                        <button class="ticket-button" chat-id="<%= ticket._id %>">Chat</button>
+                                        <button class="chat-ticket-button" id="chat-button"
+                                            chat-id="<%= ticket._id %>">Chat</button>
                                     </div>
                                 </div>
 
@@ -144,7 +142,7 @@
                 </div>
             </div>
             <script>
-                const chatButtons = document.querySelectorAll(".ticket-button");
+                const chatButtons = document.querySelectorAll(".chat-ticket-button");
                 chatButtons.forEach(chatButton => {
                     chatButton.addEventListener('click', () => {
                         const Id = chatButton.getAttribute("chat-id");
@@ -154,25 +152,22 @@
 
                     })
                 });
-
-                const resolvedNode = document.getElementById("ResolvedBtn");
-                const confirmationPopup = document.getElementById("confirmationPopup");
-                const confirmCloseBtn = document.getElementById("confirmCloseBtn"); const
-                    cancelCloseBtn = document.getElementById("cancelCloseBtn");
-                const headingNode = document.getElementById("headmsg");
-                headingNode.innerText = "Confirm Mark As Resolved";
-                const msgNode = document.getElementById("msg");
-                msgNode.innerText = "Are you sure you want to mark this ticket as Resolved";
-                resolvedNode.addEventListener("click", () => {
+                const closeNode = document.getElementById("CloseBtn");
+                const
+                    confirmationPopup = document.getElementById("confirmationPopup");
+                const confirmCloseBtn = document.getElementById("confirmCloseBtn");
+                const cancelCloseBtn = document.getElementById("cancelCloseBtn");
+                closeNode.addEventListener("click", () => {
                     confirmationPopup.style.display = "block";
                 });
                 cancelCloseBtn.addEventListener("click", () => {
                     confirmationPopup.style.display = "none";
                 });
                 confirmCloseBtn.addEventListener("click", (e) => {
-                    const ticketId = resolvedNode.getAttribute("close-id");
+                    const ticketId = closeNode.getAttribute("close-id");
+                    console.log(ticketId);
                     confirmationPopup.style.display = "none";
-                    fetch("/ticket/Resolved", {
+                    fetch("/ticket/Close", {
                         method: "PUT",
                         headers: {
                             'Content-Type': 'application/json'
@@ -183,10 +178,9 @@
                             if (response.status !== 200) {
                                 throw new Error("failed to modify status");
                             }
-                            console.log("DOne")
                         })
                         .then(function () {
-                            window.location.href = "/ticket/resolverView";
+                            window.location.href = "/ticket/MyView";
                         })
                         .catch(function (err) {
                             alert(err);
@@ -195,4 +189,49 @@
             </script>
 </body>
 
-</html>
+</html> -->
+
+<%- include('./partials/confirmation.ejs') %>
+    <%- include('./partials/employeeSidebar') %>
+        <%- include("./partials/myTickets.ejs") %>
+            <script>
+                //------close ticket-------
+                const closeButtons = document.querySelectorAll(".close-ticket-button");
+                const
+                    confirmationPopup = document.getElementById("confirmationPopup");
+                const confirmCloseBtn = document.getElementById("confirmCloseBtn");
+                const cancelCloseBtn = document.getElementById("cancelCloseBtn");
+                closeButtons.forEach(closeButton => {
+                    closeButton.addEventListener("click", () => {
+                        confirmationPopup.style.display = "block";
+                        const ticketId = closeButton.getAttribute("close-id");
+                        confirmCloseBtn.setAttribute("close-id", ticketId);
+                    });
+                });
+                cancelCloseBtn.addEventListener("click", () => {
+                    confirmationPopup.style.display = "none";
+                });
+                confirmCloseBtn.addEventListener("click", (e) => {
+                    const ticketId = confirmCloseBtn.getAttribute("close-id");
+                    confirmationPopup.style.display = "none";
+                    fetch("/ticket/Close", {
+                        method: "PUT",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ ticketId })
+                    })
+                        .then(function (response) {
+                            if (response.status !== 200) {
+                                throw new Error("failed to modify status");
+                            }
+                        })
+                        .then(function () {
+                            window.location.href = "/ticket/EmployeeView";
+                        })
+                        .catch(function (err) {
+                            alert(err);
+                        });
+                })
+
+            </script>

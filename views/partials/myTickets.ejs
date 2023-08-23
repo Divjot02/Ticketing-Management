@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        .welcome {
+            font-size: 18px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .ticket-container {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 10px;
+            background-color: #f5f5f5;
+            flex-basis: calc(33.33% - 20px);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ticket-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: -10px;
+        }
+
+        .ticket-id {
+            font-weight: bold;
+            /* text-align: center; */
+            margin-bottom: 10px;
+        }
+
+        .ticket-title {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .ticket-description {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .ticket-badge {
+            font-weight: bold;
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            text-align: center;
+        }
+
+        .ticket-status span,
+        .ticket-assigned span {
+            font-weight: bold;
+        }
+
+
+        .ticket-button {
+            background-color: #6634db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        #CloseBtn {
+            background-color: #c53535;
+            margin-bottom: 10px;
+        }
+
+        .ticket-header,
+        .ticket-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <%- include('./popupform') %>
+            <div class="welcome">Your Tickets</div>
+            <div class="ticket-row">
+                <% if (tickets && tickets.length> 0) { %>
+                    <% tickets.forEach(ticket=> { %>
+                        <div class="ticket-container">
+                            <div class="ticket-header">
+                                <div class="ticket-id">
+                                    <%= ticket._id %>
+                                </div>
+                                <% if(ticket.status==="open" ) { %>
+                                    <button id="CloseBtn" class="close-ticket-button"
+                                        close-id="<%= ticket._id %>">Close</button>
+                                    <% } %>
+                            </div>
+                            <div class="ticket-details">
+                                <div class="ticket-title">
+                                    <%= ticket.title %>
+                                </div>
+                                <div class="ticket-description">
+                                    <%= ticket.description %>
+                                </div>
+                                <div class="ticket-status">
+                                    <span> Status:</span>
+                                    <%= ticket.status %>
+                                </div>
+                                <div class="ticket-footer">
+                                    <div class="ticket-assigned">
+                                        <span> Assigned To:</span>
+                                        <%= ticket.assignedTo %>
+                                    </div>
+                                    <div class="ticket-badge">
+                                        <%= ticket.priority %>
+                                    </div>
+                                    <button class="chat-ticket-button" id="chat-button"
+                                        chat-id="<%= ticket._id %>">Chat</button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <% }) %>
+                            <% } else { %>
+                                <p>No tickets available.</p>
+                                <% } %>
+            </div>
+    </div>
+    <script>
+        //-----------------chat window
+        const chatButtons = document.querySelectorAll(".chat-ticket-button");
+        chatButtons.forEach(chatButton => {
+            chatButton.addEventListener('click', () => {
+                const Id = chatButton.getAttribute("chat-id");
+                console.log(Id);
+
+                window.location.href = `/Chat/Window?ticketId=${Id}`;
+
+            })
+        });
+    </script>
+</body>
+
+</html>

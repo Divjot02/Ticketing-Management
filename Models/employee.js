@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 // create a schema for resolvers
-const resolverSchema = new mongoose.Schema({
+const employeeSchema = new mongoose.Schema({
   username: {
     type: String,
     required: [true, "Please enter a valid Username"],
@@ -23,6 +23,6 @@ const resolverSchema = new mongoose.Schema({
   },
 });
 // create model for this schema
-const resolverModel = mongoose.model("Resolver", resolverSchema);
+const employeeModel = mongoose.model("Employee", employeeSchema);
 //export this model
-module.exports = resolverModel;
+module.exports = employeeModel;

@@ -6,7 +6,7 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const ticketRouter = require("./Routes/ticket");
 const userRouter = require("./Routes/users");
-const resolverRouter = require("./Routes/resolver");
+const employeeRouter = require("./Routes/employee");
 const chatRouter = require("./Routes/chat");
 const MessageModel = require("./Models/message");
 //socketIO
@@ -50,8 +50,8 @@ app.get("/", (req, res) => {
     res.render("userDashboard.ejs", { username: req.session.username });
     return;
   }
-  if (req.session.resolverLogggedIn) {
-    res.render("resolverDashboard.ejs", { session: req.session });
+  if (req.session.employeeLoggedIn) {
+    res.render("employeeDashboard.ejs", { session: req.session });
     return;
   }
   res.render("default.ejs");
@@ -69,7 +69,7 @@ app.get("/", (req, res) => {
 //------------------------------------
 app.use("/user", userRouter);
 app.use("/ticket", ticketRouter);
-app.use("/resolver", resolverRouter);
+app.use("/employee", employeeRouter);
 app.use("/Chat", chatRouter);
 
 // app.listen(3000, () => {
@@ -77,9 +77,9 @@ app.use("/Chat", chatRouter);
 // });
 io.on("connection", (socket) => {
   console.log("a user connected");
-  socket.on("chat message", (msg) => {
-    console.log("message: " + msg);
-  });
+  // socket.on("chat message", (msg) => {
+  //   console.log("message: " + msg);
+  // });
   socket.on("join room", (ticketId) => {
     socket.join(ticketId); // Join the chat room corresponding to the ticket ID
   });

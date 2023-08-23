@@ -29,12 +29,12 @@
 </head>
 
 <body>
-    <%- include('./partials/resolverSidebar.ejs')%>
+    <%- include('./partials/employeeSidebar.ejs')%>
         <div class="content">
             <!-- <div class="heading">Ticket Management System</div> -->
             <div class="welcome">Welcome <%= session.username %>
             </div>
-
+            <%- include('./partials/popupform') %>
         </div>
 </body>
 

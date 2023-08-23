@@ -3,7 +3,8 @@ const router = express.Router();
 const {
   handleCreateTicket,
   handleViewUserTickets,
-  handleViewResolverTickets,
+  handleViewEmployeeTickets,
+  handleViewDEpartmentTickets,
   handleCloseTicket,
   handleResolvedTicket,
 } = require("../Controller/ticket");
@@ -11,8 +12,9 @@ const {
 // /ticket/Create
 router.post("/Create", handleCreateTicket);
 // /ticket/View
-router.get("/userView", handleViewUserTickets);
-router.get("/resolverView", handleViewResolverTickets);
+router.get("/UserView", handleViewUserTickets);
+router.get("/EmployeeView", handleViewEmployeeTickets);
+router.get("/DepartmentView", handleViewDEpartmentTickets);
 router.put("/Close", handleCloseTicket);
 router.put("/Resolved", handleResolvedTicket);
 module.exports = router;

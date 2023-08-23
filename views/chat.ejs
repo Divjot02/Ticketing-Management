@@ -113,9 +113,9 @@
             <% messages.forEach(message=>{ %>
                 <li> <span>
                         <% if (session.username !==message.sender ) { %>
-                            <%=message.sender%>
+                            <%=message.sender%>:
                                 <% } else {%>
-                                    You
+                                    You:
                                     <%}%>
                     </span>
                     <!-- <p class="message-text"> -->
@@ -163,9 +163,9 @@
         var messages = document.getElementById('messages');
         var li = document.createElement('li');
         if (sessionUsername === sender) {
-            li.textContent = `You: ${message}`;
+            li.innerHTML = `<span> You:</span> <p> ${message}<p>`;
         } else {
-            li.innerHtml = `<span>${sender}:</span> <p>${message}<p>`;
+            li.innerHTML = `<span>${sender}:</span> <p>${message}<p>`;
         }
 
         messages.appendChild(li);
