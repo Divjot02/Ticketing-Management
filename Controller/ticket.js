@@ -3,7 +3,7 @@ const TicketModel = require("../Models/ticket");
 async function handleCreateTicket(req, res) {
   try {
     const ticket = new TicketModel({
-      email: req.body.email,
+      email: req.session.email,
       // email: req.session.email;
       title: req.body.title,
       description: req.body.description,
