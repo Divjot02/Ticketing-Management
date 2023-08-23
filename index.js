@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 var session = require("express-session");
+const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const ticketRouter = require("./Routes/ticket");
 const userRouter = require("./Routes/users");
@@ -17,8 +18,12 @@ server.listen(3000, function () {
   console.log("Server is listening on port 3000");
 });
 // connection
+dotenv.config();
+const url = process.env.MONGO_URI;
 mongoose
-  .connect("mongodb://127.0.0.1:27017/TicketDb", { useNewUrlParser: true })
+  .connect(url)
+  // mongoose
+  //   .connect("mongodb://127.0.0.1:27017/TicketDb", { useNewUrlParser: true })
   .then(() => {
     console.log("Connected to MongoDB successfully!");
   })
@@ -102,3 +107,5 @@ io.on("connection", (socket) => {
     console.log("user disconnected");
   });
 });
+
+// bp3Fb9JUcVQ2enBh;
