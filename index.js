@@ -18,7 +18,7 @@ server.listen(3000, function () {
 });
 // connection
 mongoose
-  .connect("mongodb://localhost:27017/TicketDb", { useNewUrlParser: true })
+  .connect("mongodb://127.0.0.1:27017/TicketDb", { useNewUrlParser: true })
   .then(() => {
     console.log("Connected to MongoDB successfully!");
   })
